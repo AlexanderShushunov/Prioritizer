@@ -1,6 +1,6 @@
 import {createPrioritizer} from './prioritizer';
 
-describe('should invoke ', () => {
+describe('Prioritizer', () => {
   test('', (done) => {
     const prioritizer = createPrioritizer();
     const invokeSequence: number[] = [];
