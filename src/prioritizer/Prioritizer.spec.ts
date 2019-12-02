@@ -1,11 +1,11 @@
-import {createPrioritizer} from './prioritizer';
+import {Prioritizer} from './prioritizer';
 
 describe('Prioritizer', () => {
   test('', (done) => {
-    const prioritizer = createPrioritizer();
+    const prioritizer = new Prioritizer();
     const invokeSequence: number[] = [];
-    const funcWithLowPriority = prioritizer(() => invokeSequence.push(1), 10);
-    const funcWithHiPriority = prioritizer(() => invokeSequence.push(2), 1);
+    const funcWithLowPriority = prioritizer.defer(() => invokeSequence.push(1), 10);
+    const funcWithHiPriority = prioritizer.defer(() => invokeSequence.push(2), 1);
     funcWithLowPriority();
     funcWithHiPriority();
     setTimeout(() => {
