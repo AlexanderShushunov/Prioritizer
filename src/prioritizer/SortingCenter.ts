@@ -3,7 +3,7 @@ import {Job} from './Job';
 type JobRunner = () => Promise<void>
 
 export class SortingCenter {
-  private shelve: {
+  private readonly shelve: {
     [index: number]: Array<JobRunner>
   } = {};
 

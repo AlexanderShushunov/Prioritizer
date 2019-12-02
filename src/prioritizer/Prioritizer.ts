@@ -7,10 +7,12 @@ export class Prioritizer {
   private sortingCenter = new SortingCenter();
 
   nextTick() {
-    if (this.active) {
-      return;
-    }
-    setTimeout(this.tick, 0);
+    setTimeout(() => {
+      if (this.active) {
+        return
+      }
+      this.tick()
+    }, 0);
   }
 
   private tick = async () => {
@@ -20,7 +22,7 @@ export class Prioritizer {
     this.nextTick();
   };
 
-  defer<Out, In1, In2, In extends [] | [In1] | [In1, In2]>(
+  defer<Out, In extends Array<any>>(
     fn: (...args: In) => Out | Promise<Out>, priority: number
   ): (...args: In) => Promise<Out> {
     return (...args) => {

@@ -96,7 +96,7 @@ describe('SortingCenter', () => {
     expect(jobsInvokeSequence).toEqual([1, 'err', 3]);
   });
 
-  it('should not mask exception rezult', async () => {
+  it('should not mask exception result', async () => {
     let badJobError = undefined;
     const sortingCenter = new SortingCenter();
     sortingCenter.addJob(badJob, 0).catch(err => badJobError = err);
