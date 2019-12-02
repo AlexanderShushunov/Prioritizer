@@ -1,18 +1,26 @@
 import {SortingCenter} from './SortingCenter';
 import {makeJob} from './makeJob';
 
+type Tick = () => unknown
+type Ticker = (fn: Tick) => unknown;
+
 export class Prioritizer {
 
   private active = false;
-  private sortingCenter = new SortingCenter();
+  private readonly sortingCenter = new SortingCenter();
+  private readonly ticker: Ticker;
+
+  constructor(ticker: Ticker = fn => setTimeout(fn, 0)) {
+    this.ticker = ticker;
+  }
 
   nextTick() {
-    setTimeout(() => {
+    this.ticker(() => {
       if (this.active) {
-        return
+        return;
       }
-      this.tick()
-    }, 0);
+      this.tick();
+    })
   }
 
   private tick = async () => {

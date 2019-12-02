@@ -54,4 +54,19 @@ describe('Prioritizer', () => {
     await prioritizer.defer(fn, 10)('1', 2, true);
     expect(fn).toBeCalledWith('1', 2, true);
   });
+
+  it('should use specified ticker', async () => {
+    let outerResolve = () => {
+    };
+    const fn = jest.fn();
+    const prioritizer = new Prioritizer(fn => {
+      new Promise(resolve => outerResolve = resolve).then(fn);
+    });
+    const fnResultPromise = prioritizer.defer(fn, 10)();
+    expect(fn).not.toHaveBeenCalled();
+    // await fnResultPromise; it freeze the test
+    outerResolve();
+    await fnResultPromise;
+    expect(fn).toHaveBeenCalled();
+  });
 });
